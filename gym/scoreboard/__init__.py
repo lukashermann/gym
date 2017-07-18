@@ -392,6 +392,13 @@ add_task(
 )
 
 add_task(
+    id='Jaco-v1',
+    summary="Make a 3D robot reach to a randomly located target.",
+    group='mujoco',
+)
+
+
+add_task(
     id='HalfCheetah-v1',
     summary="Make a 2D cheetah robot run.",
     group='mujoco',
