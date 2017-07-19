@@ -105,7 +105,6 @@ class MujocoEnv(gym.Env):
                 self._get_viewer().finish()
                 self.viewer = None
             return
-
         if mode == 'rgb_array':
             self._get_viewer().render()
             data, width, height = self._get_viewer().get_image()
@@ -113,9 +112,9 @@ class MujocoEnv(gym.Env):
         elif mode == 'human':
             self._get_viewer().loop_once()
 
-    def _get_viewer(self):
+    def _get_viewer(self,visible=True):
         if self.viewer is None:
-            self.viewer = mujoco_py.MjViewer()
+            self.viewer = mujoco_py.MjViewer(visible=visible)
             self.viewer.start()
             self.viewer.set_model(self.model)
             self.viewer_setup()
@@ -146,7 +145,7 @@ class MujocoPixelWrapper(gym.ObservationWrapper):
         self.observation_space = spaces.Box(0, 255, [height, width, 3])
 
     def get_viewer(self):
-        return self.env.unwrapped._get_viewer()
+        return self.env.unwrapped._get_viewer(visible=False)
 
     def _observation(self, observation):
         self.get_viewer().render()
