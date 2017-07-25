@@ -145,7 +145,7 @@ class MujocoPixelWrapper(gym.ObservationWrapper):
         self.observation_space = spaces.Box(0, 255, [height, width, 3])
 
     def get_viewer(self):
-        return self.env.unwrapped._get_viewer(visible=False)
+        return self.env.unwrapped._get_viewer(visible=True)
 
     def _observation(self, observation):
         self.get_viewer().render()
