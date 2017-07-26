@@ -50,11 +50,9 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         return self._get_obs()
 
     def _get_obs(self):
-        theta = self.model.data.qpos.flat[:2]
+        theta = self.model.data.qpos.flat[:6]
         return np.concatenate([
             np.cos(theta),
             np.sin(theta),
-            self.model.data.qpos.flat[2:],
-            self.model.data.qvel.flat[:2],
-            self.get_body_com("jaco_link_hand") - self.get_body_com("target")
+            self.model.data.qvel.flat[:6],
         ])

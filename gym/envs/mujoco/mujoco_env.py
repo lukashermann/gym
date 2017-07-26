@@ -146,20 +146,19 @@ class MujocoPixelWrapper(gym.ObservationWrapper):
         self.observation_space = spaces.Box(0, 255, [height, width, 3])
 
     def get_viewer(self):
-        return self.env.unwrapped._get_viewer(visible=True)
+        return self.env.unwrapped._get_viewer(visible=False)
 
     def _observation(self, observation):
         self.get_viewer().render()
         data, width, height = self.get_viewer().get_image()
         np.fromstring(data, dtype='uint8').reshape(height, width, 3)[::-1,:,:]
 
-        self.get_viewer().render()
         depth_data, width_depth, height_depth = self.get_viewer().get_depth_image()
         # depth image has dimesions 500x250, so it has to be resized
         depth_img = np.fromstring(depth_data, dtype='float').reshape(height_depth,width_depth/2)[::-1,:]
         depth_img = cv2.resize(depth_img,(height, width))
-
-        return [np.fromstring(data, dtype='uint8').reshape(height, width, 3)[::-1,:,:],depth_img]
+        # return [rgb, depth, low_level observation]    
+        return [np.fromstring(data, dtype='uint8').reshape(height, width, 3)[::-1,:,:],depth_img,observation]
 
 def MujocoPixelEnv(base_env_id):
     return MujocoPixelWrapper(gym.make(base_env_id))
