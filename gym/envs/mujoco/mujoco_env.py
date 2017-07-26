@@ -6,6 +6,7 @@ import numpy as np
 from os import path
 import gym
 import six
+import cv2
 
 try:
     import mujoco_py
@@ -150,8 +151,15 @@ class MujocoPixelWrapper(gym.ObservationWrapper):
     def _observation(self, observation):
         self.get_viewer().render()
         data, width, height = self.get_viewer().get_image()
-        return np.fromstring(data, dtype='uint8').reshape(height, width, 3)[::-1,:,:]
+        np.fromstring(data, dtype='uint8').reshape(height, width, 3)[::-1,:,:]
 
+        self.get_viewer().render()
+        depth_data, width_depth, height_depth = self.get_viewer().get_depth_image()
+        # depth image has dimesions 500x250, so it has to be resized
+        depth_img = np.fromstring(depth_data, dtype='float').reshape(height_depth,width_depth/2)[::-1,:]
+        depth_img = cv2.resize(depth_img,(height, width))
+
+        return [np.fromstring(data, dtype='uint8').reshape(height, width, 3)[::-1,:,:],depth_img]
 
 def MujocoPixelEnv(base_env_id):
     return MujocoPixelWrapper(gym.make(base_env_id))

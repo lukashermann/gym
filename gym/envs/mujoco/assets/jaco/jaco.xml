@@ -50,12 +50,12 @@
 			<joint pos="0 0 0" type="hinge"/>
 		</default>
 		<default class ="ground">
-			<geom material="MatGnd" type="plane" contype="0" conaffinity="1"/>
+			<geom type="plane" rgba="0.7 0.7 0.7 1" contype="0" conaffinity="1"/>
 		</default>
    </default>
 
     <worldbody>
-		<light directional="true" cutoff="60" exponent="1" diffuse="1 1 1" specular=".1 .1 .1" pos="1 1 1.5" dir="-1 -1 -1.3"/>
+		<light castshadow="false" directional="true" cutoff="60" exponent="1" diffuse="1 1 1" specular=".1 .1 .1" pos="1 1 1.5" dir="-1 -1 -1.3"/>
         <geom name="ground" class="ground" pos="0 0 0" size="2 2 1"/>
 
         <body name="jaco_link_base" childclass="vizNcoll" pos="0 0 0.25">
