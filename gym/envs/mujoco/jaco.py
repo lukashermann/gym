@@ -37,7 +37,6 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
 
     def reset_model(self):
-        print("qpos",self.init_qpos)
         qpos = self.initialize_random_qpos()
         while True:
             self.goal = self.np_random.uniform(low=-.6, high=.6, size=2)
