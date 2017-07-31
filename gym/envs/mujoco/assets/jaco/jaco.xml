@@ -55,7 +55,7 @@
    </default>
 
     <worldbody>
-		<light castshadow="false" directional="true" cutoff="60" exponent="1" diffuse="1 1 1" specular=".1 .1 .1" pos="1 1 1.5" dir="-1 -1 -1.3"/>
+		<light castshadow="true" directional="true" cutoff="60" exponent="1" diffuse="1 1 1" specular=".1 .1 .1" pos="1 1 1.5" dir="-1 -1 -1.3"/>
         <geom name="ground" class="ground" pos="0 0 0" size="5 5 1"/>
 
         <body name="jaco_link_base" childclass="vizNcoll" pos="0 0 0.25">
