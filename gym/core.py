@@ -92,7 +92,7 @@ class Env(object):
             reward (float) : amount of reward returned after previous action
             done (boolean): whether the episode has ended, in which case further step() calls will return undefined results
             info (dict): contains auxiliary diagnostic information (helpful for debugging, and sometimes learning)
-        """
+        """ 
         return self._step(action)
 
     def reset(self):
