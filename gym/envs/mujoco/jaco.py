@@ -53,5 +53,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         return np.concatenate([
             np.cos(theta),
             np.sin(theta),
+            self.model.data.qpos.flat[6:],
             self.model.data.qvel.flat[:6],
+            self.get_body_com("jaco_link_hand")-self.get_body_com("target")
         ])
