@@ -49,7 +49,8 @@ class MujocoEnv(gym.Env):
         high = np.inf*np.ones(self.obs_dim)
         low = -high
         self.observation_space = spaces.Box(low, high)
-
+        self.width = 500
+        self.height = 500
         self._seed()
 
     def _seed(self, seed=None):
@@ -115,7 +116,7 @@ class MujocoEnv(gym.Env):
 
     def _get_viewer(self,visible=True):
         if self.viewer is None:
-            self.viewer = mujoco_py.MjViewer(visible=visible)
+            self.viewer = mujoco_py.MjViewer(visible=visible, init_width=self.width, init_height=self.height)
             self.viewer.start()
             self.viewer.set_model(self.model)
             self.viewer_setup()

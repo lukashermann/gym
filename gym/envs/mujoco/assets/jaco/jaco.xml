@@ -60,7 +60,7 @@
 
         <body name="jaco_link_base" childclass="vizNcoll" pos="0 0 0.25">
             <inertial pos="-3.14012e-008 0.000451919 0.0770704" quat="1 -0.000920048 6.51183e-006 5.62643e-005" mass="0.787504" diaginertia="0.00187445 0.00186316 0.000676952" />
-            <geom contype="1" conaffinity="1" mesh="jaco_link_base"/>
+            <geom contype="0" conaffinity="0" mesh="jaco_link_base"/>
 			<geom type="capsule" pos="0 0 -0.125" size=".045 0.125"/>
 
 

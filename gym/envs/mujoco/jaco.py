@@ -4,14 +4,19 @@ from gym.envs.mujoco import mujoco_env
 
 class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def __init__(self):
+        self.col_pen = 0#-0.5
+        print("h")
         utils.EzPickle.__init__(self)
         mujoco_env.MujocoEnv.__init__(self, 'jaco/jaco.xml', 2)
+        self.width = 200
+        self.height = 200
+
 
     def _step(self, a):
         vec = self.get_body_com("jaco_link_hand")-self.get_body_com("target")
-        reward_dist = - np.linalg.norm(vec)
-        reward_ctrl = - np.square(a).sum()
-        reward = reward_dist + reward_ctrl
+        reward_dist = - 0.1 * np.linalg.norm(vec)
+        reward_ctrl = - 0.1 * np.square(a).sum()
+        reward = reward_dist + reward_ctrl + self.col_pen * self.detect_col() 
         self.do_simulation(a, self.frame_skip)
         ob = self._get_obs()
         done = False
@@ -21,6 +26,12 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         #self.set_state(qpos, self.model.data.qvel.flat.copy())
 
         return ob, reward, done, dict(reward_dist=reward_dist, reward_ctrl=reward_ctrl)
+
+    def detect_col(self):
+        if self.data.ncon > 0:
+            return 1
+        else:
+            return 0
 
     def viewer_setup(self):
         self.viewer.cam.trackbodyid = 1
