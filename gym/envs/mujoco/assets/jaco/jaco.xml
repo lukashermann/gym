@@ -55,7 +55,7 @@
    </default>
 
     <worldbody>
-		<light castshadow="true" directional="true" cutoff="60" exponent="1" diffuse="1 1 1" specular=".1 .1 .1" pos="1 1 1.5" dir="-1 -1 -1.3"/>
+		<light castshadow="false" directional="true" cutoff="60" exponent="1" diffuse="1 1 1" specular=".1 .1 .1" pos="1 1 1.5" dir="-1 -1 -1.3"/>
         <geom name="ground" class="ground" pos="0 0 0" size="5 5 1"/>
 
         <body name="jaco_link_base" childclass="vizNcoll" pos="0 0 0.25">
@@ -130,7 +130,7 @@
         <body name="target" pos="0 0 .01">
             <joint armature="0" axis="1 0 0" damping="0" limited="true" name="target_x" pos="0 0 0" range="-.6 .6" ref="0" stiffness="0" type="slide"/>
             <joint armature="0" axis="0 1 0" damping="0" limited="true" name="target_y" pos="0 0 0" range="-.6 .6" ref="0" stiffness="0" type="slide"/>
-            <geom conaffinity="0" contype="0" name="target" pos="0 0 0.02" rgba="0.9 0.2 0.2 1" size=".04" type="sphere"/>
+            <geom conaffinity="0" contype="0" name="target" pos="0 0 0.02" rgba="0.9 0.2 0.2 1" size=".06" type="sphere"/>
         </body>
     </worldbody>
 
