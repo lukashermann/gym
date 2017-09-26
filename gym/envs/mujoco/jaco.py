@@ -34,6 +34,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
             return 0
 
     def viewer_setup(self):
+
         self.viewer.cam.trackbodyid = 1
         self.viewer.cam.distance = 2
         #print("distance", self.viewer.cam.lookat[0],self.viewer.cam.lookat[1],self.viewer.cam.lookat[2])
