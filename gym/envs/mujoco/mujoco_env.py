@@ -114,7 +114,7 @@ class MujocoEnv(gym.Env):
         elif mode == 'human':
             self._get_viewer().loop_once()
 
-    def _get_viewer(self,visible=False):
+    def _get_viewer(self,visible=True):
         if self.viewer is None:
             self.viewer = mujoco_py.MjViewer(visible=visible, init_width=self.width, init_height=self.height)
             self.viewer.start()
