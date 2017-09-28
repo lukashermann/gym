@@ -60,7 +60,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         self.set_state(qpos, qvel)
         return self._get_obs()
 
-    def _get_obs(self):
+    def _get_obs_state_space(self):
         theta = self.model.data.qpos.flat[:6]
         return np.concatenate([
             np.cos(theta),
@@ -68,4 +68,12 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
             self.model.data.qpos.flat[6:],
             self.model.data.qvel.flat[:6],
             self.get_body_com("jaco_link_hand")-self.get_body_com("target")
+        ])
+
+    def _get_obs(self):
+        theta = self.model.data.qpos.flat[:6]
+        return np.concatenate([
+            np.cos(theta),
+            np.sin(theta),
+            self.model.data.qvel.flat[:6]
         ])
