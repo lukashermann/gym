@@ -136,7 +136,7 @@
 
 	<actuator>
 		<!--  ================= Torque actuators (Weren't present in the URDF. Added seperately)================= /-->
-		<motor joint='jaco_joint_1' 	name='Ajaco_joint_1' gear="50" ctrllimited="true" ctrlrange="-1.0 1.0"/>
+		<motor joint='jaco_joint_1' 	name='Ajaco_joint_1' gear="100" ctrllimited="true" ctrlrange="-1.0 1.0"/>
 		<motor joint='jaco_joint_2' 	name='Ajaco_joint_2' gear="50" ctrllimited="true" ctrlrange="-1.0 1.0"/>
 		<motor joint='jaco_joint_3' 	name='Ajaco_joint_3' gear="50" ctrllimited="true" ctrlrange="-1.0 1.0"/>
 		<motor joint='jaco_joint_4' 	name='Ajaco_joint_4' gear="50" ctrllimited="true" ctrlrange="-1.0 1.0"/>
