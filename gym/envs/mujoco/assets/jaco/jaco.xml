@@ -79,25 +79,25 @@
 					<body name="jaco_link_3" pos="0.41 0 0" quat="0 0.707107 0.707107 0">
                         <inertial pos="0.0847979 -1.18469e-007 -0.020283" quat="2.33799e-005 0.694869 1.96996e-005 0.719136" mass="0.70372" diaginertia="0.00386732 0.00373181 0.000358773" />
                         <joint name="jaco_joint_3" axis="0 0 -1" />
-                        <geom contype="1" conaffinity="1" mesh="jaco_link_3" rgba="1 0 1 1"/>
+                        <geom contype="1" conaffinity="1" mesh="jaco_link_3"/>
 
 
 						<body name="jaco_link_4" pos="0.207 0 -0.01125" quat="0 0.707107 0 -0.707107">
                             <inertial pos="0.00914824 4.53141e-008 -0.0370941" quat="0.971237 -1.92989e-005 -0.238115 3.23646e-005" mass="0.227408" diaginertia="0.000176463 0.00017225 0.000108303" />
                             <joint name="jaco_joint_4" axis="0 0 -1" />
-                            <geom contype="1" conaffinity="1" mesh="jaco_link_4" rgba=".0 1 1 1"/>
+                            <geom contype="1" conaffinity="1" mesh="jaco_link_4"/>
 
 
 							<body name="jaco_link_5" pos="0.0343 0 -0.06588" quat="0.887011 0 -0.461749 0">
                                 <inertial pos="0.00914824 4.53141e-008 -0.0370941" quat="0.971237 -1.92989e-005 -0.238115 3.23646e-005" mass="0.227408" diaginertia="0.000176463 0.00017225 0.000108303" />
                                 <joint name="jaco_joint_5" axis="0 0 -1" />
-                                <geom contype="1" conaffinity="1" mesh="jaco_link_5" rgba=".0 1 .0 1"/>
+                                <geom contype="1" conaffinity="1" mesh="jaco_link_5"/>
 
 
 								<body name="jaco_link_hand" pos="0.0343 0 -0.06588" quat="0.627211 -0.326506 -0.326506 0.627211">
                                     <inertial pos="0.0036132 -6.2241e-005 -0.0583749" quat="0.669114 -0.237618 -0.23799 0.66271" mass="0.58074" diaginertia="0.000817146 0.000671192 0.000606807" />
                                     <joint name="jaco_joint_6" axis="0 0 -1" />
-                                    <geom contype="1" conaffinity="1" mesh="jaco_link_hand" rgba=".0 .0 1 1"/>
+                                    <geom contype="1" conaffinity="1" mesh="jaco_link_hand"/>
 
 
                                     <!--<body name="jaco_link_finger_1" pos="-0.03978 0 -0.10071" quat="-0.414818 -0.329751 -0.663854 0.52772">
