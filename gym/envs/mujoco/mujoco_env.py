@@ -28,7 +28,8 @@ class MujocoEnv(gym.Env):
         self.frame_skip = frame_skip
         self.model = mujoco_py.MjModel(fullpath)
         self.data = self.model.data
-        self.viewer = None
+        self.viewer1 = None
+        self.viewer2 = None
 
         self.metadata = {
             'render.modes': ['human', 'rgb_array'],
@@ -67,7 +68,14 @@ class MujocoEnv(gym.Env):
         """
         raise NotImplementedError
 
-    def viewer_setup(self):
+    def viewer1_setup(self):
+        """
+        This method is called when the viewer is initialized and after every reset
+        Optionally implement this method, if you need to tinker with camera position
+        and so forth.
+        """
+        pass
+    def viewer2_setup(self):
         """
         This method is called when the viewer is initialized and after every reset
         Optionally implement this method, if you need to tinker with camera position
@@ -80,9 +88,12 @@ class MujocoEnv(gym.Env):
     def _reset(self):
         mjlib.mj_resetData(self.model.ptr, self.data.ptr)
         ob = self.reset_model()
-        if self.viewer is not None:
-            self.viewer.autoscale()
-            self.viewer_setup()
+        if self.viewer1 is not None:
+            self.viewer1.autoscale()
+            self.viewer1_setup()
+        if self.viewer2 is not None:
+            self.viewer2.autoscale()
+            self.viewer2_setup()
         return ob
 
     def set_state(self, qpos, qvel):
@@ -103,24 +114,44 @@ class MujocoEnv(gym.Env):
 
     def _render(self, mode='human', close=False):
         if close:
-            if self.viewer is not None:
-                self._get_viewer().finish()
-                self.viewer = None
+            if self.viewer1 is not None:
+                self._get_viewer1().finish()
+                self.viewer1 = None
+            if self.viewer2 is not None:
+                self._get_viewer2().finish()
+                self.viewer2 = None
             return
         if mode == 'rgb_array':
-            self._get_viewer().render()
-            data, width, height = self._get_viewer().get_image()
-            return np.fromstring(data, dtype='uint8').reshape(height, width, 3)[::-1, :, :]
+            #if self.viewer2 is not None:
+            #    self.update_cam()
+            self._get_viewer1().render()
+            data, width, height = self._get_viewer1().get_image()
+            img1 = np.fromstring(data, dtype='uint8').reshape(height, width, 3)[::-1, :, :]
+            self._get_viewer2().render()
+            print(self.viewer2.cam.pose.head_pos[1])
+            data, width, height = self._get_viewer2().get_image()
+            img2 = np.fromstring(data, dtype='uint8').reshape(height, width, 3)[::-1, :, :]
+            return img1, img2
         elif mode == 'human':
-            self._get_viewer().loop_once()
+            self._get_viewer1().loop_once()
 
-    def _get_viewer(self,visible=True):
-        if self.viewer is None:
-            self.viewer = mujoco_py.MjViewer(visible=visible, init_width=self.width, init_height=self.height)
-            self.viewer.start()
-            self.viewer.set_model(self.model)
-            self.viewer_setup()
-        return self.viewer
+    def _get_viewer1(self,visible=False):
+        if self.viewer1 is None:
+            self.viewer1 = mujoco_py.MjViewer(visible=visible, init_width=self.width, init_height=self.height)
+            self.viewer1.start()
+            self.viewer1.set_model(self.model)
+            self.viewer1_setup()
+        return self.viewer1
+
+
+
+    def _get_viewer2(self,visible=False):
+        if self.viewer2 is None:
+            self.viewer2 = mujoco_py.MjViewer(visible=visible, init_width=self.width, init_height=self.height)
+            self.viewer2.start()
+            self.viewer2.set_model(self.model)
+            self.viewer2_setup()
+        return self.viewer2
 
     def get_body_com(self, body_name):
         idx = self.model.body_names.index(six.b(body_name))
@@ -143,19 +174,19 @@ class MujocoEnv(gym.Env):
 class MujocoPixelWrapper(gym.ObservationWrapper):
     def __init__(self, env):
         super(MujocoPixelWrapper, self).__init__(env)
-        data, width, height = self.get_viewer().get_image()
+        data, width, height = self.get_viewer1().get_image()
         self.observation_space = spaces.Box(0, 255, [height, width, 3])
 
-    def get_viewer(self):
-        return self.env.unwrapped._get_viewer(visible=False)
+    def get_viewer1(self):
+        return self.env.unwrapped._get_viewer1(visible=False)
 
     def _observation(self, observation):
-        self.get_viewer().render()
-        data, width, height = self.get_viewer().get_image()
+        self.get_viewer1().render()
+        data, width, height = self.get_viewer1().get_image()
         #print("later",np.fromstring(data, dtype='uint8').reshape(height, width, 3)[::-1,:,:].mean())
         rgb_img = np.fromstring(data, dtype='uint8').reshape(height, width, 3)[::-1,:,:]
 
-        depth_data, width_depth, height_depth = self.get_viewer().get_depth_image()
+        depth_data, width_depth, height_depth = self.get_viewer1().get_depth_image()
         # depth image has dimesions 500x250, so it has to be resized
         depth_img = np.fromstring(depth_data, dtype='float').reshape(height_depth,width_depth/2)[::-1,:]
         depth_img = cv2.resize(depth_img,(height, width), interpolation = cv2.INTER_NEAREST)

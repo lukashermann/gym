@@ -16,10 +16,12 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         vec = self.get_body_com("jaco_link_hand")-self.get_body_com("target")
         reward_dist = - 0.1 * np.linalg.norm(vec)
         reward_ctrl = - 0.1 * np.square(a).sum()
-        reward = reward_dist + reward_ctrl + self.col_pen * self.detect_col() 
+        reward = reward_dist + reward_ctrl + self.col_pen * self.detect_col()
         self.do_simulation(a, self.frame_skip)
         ob = self._get_obs()
         done = False
+
+
 
         #qpos = np.random.uniform(low=-0.1, high=0.1, size=self.model.nq) + self.init_qpos
         #qpos = np.array([0,0.5,-3,0,0,0,0,0])
@@ -33,11 +35,33 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         else:
             return 0
 
-    def viewer_setup(self):
+    def viewer1_setup(self):
 
-        self.viewer.cam.trackbodyid = 1
-        self.viewer.cam.distance = 2
+        self.viewer1.cam.trackbodyid = 1
+        self.viewer1.cam.distance = 2
         #print("distance", self.viewer.cam.lookat[0],self.viewer.cam.lookat[1],self.viewer.cam.lookat[2])
+    def viewer2_setup(self):
+        """self.viewer2.cam.pose.head_pos[0] = 0
+        self.viewer2.cam.pose.head_pos[1] = 0
+        self.viewer2.cam.pose.head_pos[2] = 3"""
+        self.viewer2.cam.lookat[0] = self.model.data.xpos[2,0]
+        self.viewer2.cam.lookat[1] = self.model.data.xpos[2,1]
+        self.viewer2.cam.lookat[2] = self.model.data.xpos[2,2]
+        self.viewer1.cam.distance = 2
+        #print("distance", self.viewer.cam.lookat[0],self.viewer.cam.lookat[1],self.viewer.cam.lookat[2])
+
+    def update_cam(self):
+        #self.viewer2.cam.trackbodyid = 0
+        #self.viewer2.cam.distance = 1
+        #print(self.viewer2.cam.pose.head_pos[0],self.viewer2.cam.pose.head_pos[1],self.viewer2.cam.pose.head_pos[2])
+        self.viewer2.cam.pose.head_pos[0] = 0
+        self.viewer2.cam.pose.head_pos[1] = 0
+        self.viewer2.cam.pose.head_pos[2] = 3
+        self.viewer2.cam.lookat[0] = self.model.data.xpos[7,0]
+        self.viewer2.cam.lookat[1] = self.model.data.xpos[7,1]
+        self.viewer2.cam.lookat[2] = self.model.data.xpos[7,2]
+        #print("distance", self.viewer2.cam.lookat[0],self.viewer2.cam.lookat[1],self.viewer2.cam.lookat[2])
+
 
     def initialize_random_qpos(self):
         qpos = self.np_random.uniform(low=-0.1, high=0.1, size=self.model.nq) + self.init_qpos
