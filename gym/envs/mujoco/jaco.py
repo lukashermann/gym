@@ -47,7 +47,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         self.viewer2.cam.lookat[0] = self.model.data.xpos[2,0]
         self.viewer2.cam.lookat[1] = self.model.data.xpos[2,1]
         self.viewer2.cam.lookat[2] = self.model.data.xpos[2,2]
-        self.viewer1.cam.distance = 2
+        self.viewer2.cam.distance = 2
         #print("distance", self.viewer.cam.lookat[0],self.viewer.cam.lookat[1],self.viewer.cam.lookat[2])
 
     def update_cam(self):
