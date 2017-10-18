@@ -4,7 +4,7 @@ from gym.envs.mujoco import mujoco_env
 
 class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def __init__(self):
-        self.col_pen = 0#-0.5
+        self.col_pen = -0.5
         print("h")
         utils.EzPickle.__init__(self)
         mujoco_env.MujocoEnv.__init__(self, 'jaco/jaco.xml', 2)
