@@ -12,10 +12,19 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         self.height = 200
 
 
+    def reward_control(self, a):
+        squ_ac = np.square(a)
+        clip_ac = np.clip(squ_ac - 0.1, 0, None)
+        return -0.1 * clip_ac.sum()
+
     def _step(self, a):
         vec = self.get_body_com("jaco_link_hand")-self.get_body_com("target")
-        reward_dist = - 0.1 * np.linalg.norm(vec)
-        reward_ctrl = - 0.1 * np.square(a).sum()
+        reward_threshold = 0.2
+        if np.linalg.norm(vec) < reward_threshold:
+            reward_dist = 1
+        else:
+            reward_dist = 0
+        reward_ctrl = self.reward_control(a)
         reward = reward_dist + reward_ctrl + self.col_pen * self.detect_col()
         self.do_simulation(a, self.frame_skip)
         ob = self._get_obs()
@@ -64,7 +73,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         self.set_state(qpos, qvel)
         return self._get_obs()
 
-    def _get_obs_state_space(self):
+    def _get_obs(self):
         theta = self.model.data.qpos.flat[:6]
         return np.concatenate([
             np.cos(theta),
@@ -74,7 +83,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
             self.get_body_com("jaco_link_hand")-self.get_body_com("target")
         ])
 
-    def _get_obs(self):
+    def _get_obs_pixel(self):
         theta = self.model.data.qpos.flat[:6]
         return np.concatenate([
             np.cos(theta),
