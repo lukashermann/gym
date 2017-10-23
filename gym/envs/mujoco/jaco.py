@@ -18,7 +18,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         return -0.1 * clip_ac.sum()
 
     def _step(self, a):
-        vec = self.get_body_com("jaco_link_hand")-self.get_body_com("target")
+        vec = self.get_body_com("jaco_fingertips")-self.get_body_com("target")
         reward_threshold = 0.2
         if np.linalg.norm(vec) < reward_threshold:
             reward_dist = 1
@@ -80,7 +80,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
             np.sin(theta),
             self.model.data.qpos.flat[-2:],
             self.model.data.qvel.flat[:6],
-            self.get_body_com("jaco_link_hand")-self.get_body_com("target")
+            self.get_body_com("jaco_fingertips")-self.get_body_com("target")
         ])
 
     def _get_obs_pixel(self):
