@@ -17,13 +17,8 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         return -0.1 * clip_ac.sum()
 
     def _step(self, a):
-<<<<<<< current
         vec = self.get_body_com("jaco_fingertips")-self.get_body_com("target")
-        reward_threshold = 0.06
-=======
-        vec = self.get_body_com("jaco_link_hand")-self.get_body_com("target")
         reward_threshold = 0.1
->>>>>>> before discard
         if np.linalg.norm(vec) < reward_threshold:
             reward_dist = 1
         else:
