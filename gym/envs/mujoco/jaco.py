@@ -5,7 +5,6 @@ from gym.envs.mujoco import mujoco_env
 class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def __init__(self):
         self.col_pen = -0.5
-        print("h")
         utils.EzPickle.__init__(self)
         mujoco_env.MujocoEnv.__init__(self, 'jaco/jaco.xml', 2)
         self.width = 200
@@ -13,7 +12,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
 
     def _step(self, a):
-        vec = self.get_body_com("jaco_link_hand")-self.get_body_com("target")
+        vec = self.get_body_com("jaco_fingertips")-self.get_body_com("target")
         reward_dist = - 0.1 * np.linalg.norm(vec)
         reward_ctrl = - 0.1 * np.square(a).sum()
         reward = reward_dist + reward_ctrl + self.col_pen * self.detect_col()
@@ -71,7 +70,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
             np.sin(theta),
             self.model.data.qpos.flat[-2:],
             self.model.data.qvel.flat[:6],
-            self.get_body_com("jaco_link_hand")-self.get_body_com("target")
+            self.get_body_com("jaco_fingertips")-self.get_body_com("target")
         ])
 
     def _get_obs_combi(self):
