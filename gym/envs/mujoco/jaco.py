@@ -59,6 +59,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
                 break
         qpos[-2:] = self.goal
         qvel = self.init_qvel + self.np_random.uniform(low=-.005, high=.005, size=self.model.nv)
+        qpos [-5:-2] = 0.69
         qvel[-2:] = 0
         self.set_state(qpos, qvel)
         return self._get_obs()
