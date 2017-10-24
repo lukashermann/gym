@@ -16,10 +16,13 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         reward_dist = - 0.1 * np.linalg.norm(vec)
         reward_ctrl = - 0.1 * np.square(a).sum()
         reward = reward_dist + reward_ctrl + self.col_pen * self.detect_col()
+
         self.do_simulation(a, self.frame_skip)
         ob = self._get_obs()
         done = False
-
+        if np.linalg.norm(vec) < 0.06:
+            reward +=1
+            done = True
         #qpos = np.random.uniform(low=-0.1, high=0.1, size=self.model.nq) + self.init_qpos
         #qpos = np.array([0,0.5,-3,0,0,0,0,0])
         #self.set_state(qpos, self.model.data.qvel.flat.copy())
