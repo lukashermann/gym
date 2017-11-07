@@ -13,7 +13,7 @@ class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
     def _step(self, a):
         vec = self.get_body_com("jaco_fingertips")-self.get_body_com("target")
-        reward_dist = - 0.1 * np.linalg.norm(vec)
+        reward_dist = - 0.2 * np.linalg.norm(vec)
         reward_ctrl = - 0.1 * np.square(a).sum()
         reward = reward_dist + reward_ctrl + self.col_pen * self.detect_col()
 
