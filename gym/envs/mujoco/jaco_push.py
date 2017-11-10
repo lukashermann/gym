@@ -59,7 +59,11 @@ class JacoPushEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def reset_model(self):
         qpos = self.initialize_random_qpos()
 
-        self.goal = np.array([-0.4,0])
+        #self.goal = np.array([-0.4,0])
+        while True:
+            self.goal = self.np_random.uniform(low=-.6, high=0.6, size=2)
+            if np.linalg.norm(self.goal) < 0.42 and np.linalg.norm(self.goal) > 0.38 and self.goal[0] < 0:
+                break
         while True:
             self.target = self.np_random.uniform(low=-.6, high=0.6, size=2)
             if np.linalg.norm(self.goal-self.target) > 0.1 and np.linalg.norm(self.goal-self.target) < 0.2:
