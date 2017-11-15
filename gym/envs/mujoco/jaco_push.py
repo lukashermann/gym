@@ -49,24 +49,28 @@ class JacoPushEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
     def initialize_random_qpos(self):
         qpos = self.np_random.uniform(low=-0.1, high=0.1, size=self.model.nq) + self.init_qpos
-        qpos[0] = np.random.uniform(-np.pi,np.pi)
+        """qpos[0] = np.random.uniform(-np.pi,np.pi)
         qpos[1] = np.random.uniform(-1,0.5)
         qpos[2] = np.random.uniform(-np.pi,0)
-
+        """
+        qpos[0] = np.random.uniform(-np.pi/2-0.1,-np.pi/2+0.1)
+        qpos[1] = np.random.uniform(-0.1,0.1)
+        qpos[2] = np.random.uniform(-np.pi/2+0.1,-np.pi/2+0.1)
+        qpos[3] = -np.pi/2
         return qpos
 
 
     def reset_model(self):
         qpos = self.initialize_random_qpos()
 
-        self.goal = np.array([-0.4,0])
+        self.goal = np.array([-0.5,0])
         while True:
             self.target = self.np_random.uniform(low=-.6, high=0.6, size=2)
-            if np.linalg.norm(self.goal-self.target) > 0.1 and np.linalg.norm(self.goal-self.target) < 0.2:
+            if np.linalg.norm(self.goal-self.target) > 0.1 and np.linalg.norm(self.goal-self.target) < 0.2 and np.linalg.norm(self.target) > 0.45 and np.linalg.norm(self.target) < 0.55:
                 break
         qpos[-4:-2] = self.target
         qvel = self.init_qvel + self.np_random.uniform(low=-.005, high=.005, size=self.model.nv)
-        qpos [-7:-4] = 0.69
+        qpos [-7:-4] = 0.2
         qvel[-4:-2] = 0
 
         qpos[-2:]=self.goal

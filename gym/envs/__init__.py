@@ -212,7 +212,7 @@ register(
 register(
     id='JacoPush-v1',
     entry_point='gym.envs.mujoco:JacoPushEnv',
-    max_episode_steps=150,
+    max_episode_steps=200,
     reward_threshold=0,
 )
 
