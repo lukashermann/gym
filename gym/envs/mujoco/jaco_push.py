@@ -60,10 +60,11 @@ class JacoPushEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         qpos[1] = np.random.uniform(-1,0.5)
         qpos[2] = np.random.uniform(-np.pi,0)
         """
-        qpos[0] = -2#np.random.uniform(-np.pi/2-0.1,-np.pi/2+0.1)
+        qpos[0] = np.random.uniform(-np.pi/2-0.1,-np.pi/2+0.1)
         qpos[1] = np.random.uniform(-0.1,0.1)
         qpos[2] = np.random.uniform(-np.pi/2+0.1,-np.pi/2+0.1)
         qpos[3] = -np.pi/2
+        qpos[5] = np.random.uniform(-np.pi,np.pi)
         return qpos
 
 
