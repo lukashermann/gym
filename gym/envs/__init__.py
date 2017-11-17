@@ -202,6 +202,12 @@ register(
 # ----------------------------------------
 
 # 2D
+register(
+    id='JacoPush-v1',
+    entry_point='gym.envs.mujoco:JacoPushEnv',
+    max_episode_steps=200,
+    reward_threshold=0,
+)
 
 register(
     id='Jaco-v1',
@@ -299,13 +305,13 @@ register(
 )
 
 for task in ['Reacher', 'InvertedPendulum', 'InvertedDoublePendulum', 'HalfCheetah',
-             'Hopper', 'Swimmer', 'Walker2d', 'Ant', 'Humanoid', 'HumanoidStandup','Jaco']:
+             'Hopper', 'Swimmer', 'Walker2d', 'Ant', 'Humanoid', 'HumanoidStandup','Jaco', "JacoPush"]:
     register(
         id='{}Pixel-v1'.format(task),
         entry_point='gym.envs.mujoco:MujocoPixelEnv',
         kwargs={'base_env_id': '{}-v1'.format(task)}
     )
-     
+
 
 # Atari
 # ----------------------------------------
