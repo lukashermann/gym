@@ -60,7 +60,7 @@ class JacoPushEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         qpos[1] = np.random.uniform(-1,0.5)
         qpos[2] = np.random.uniform(-np.pi,0)
         """
-        qpos[0] = np.random.uniform(-np.pi/2-0.1,-np.pi/2+0.1)
+        qpos[0] = np.random.uniform(-np.pi/2-0.5,-np.pi/2+0.5)
         qpos[1] = np.random.uniform(-0.1,0.1)
         qpos[2] = np.random.uniform(-np.pi/2+0.1,-np.pi/2+0.1)
         qpos[3] = -np.pi/2
@@ -74,7 +74,7 @@ class JacoPushEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         self.goal = np.array([-0.5,0])
         while True:
             self.target = self.np_random.uniform(low=-.6, high=0.6, size=2)
-            if np.linalg.norm(self.goal-self.target) > 0.1 and np.linalg.norm(self.goal-self.target) < 0.2 and np.linalg.norm(self.target) > 0.45 and np.linalg.norm(self.target) < 0.55:
+            if np.linalg.norm(self.goal-self.target) > 0.1 and np.linalg.norm(self.goal-self.target) < 0.3 and np.linalg.norm(self.target) > 0.45 and np.linalg.norm(self.target) < 0.65:
                 break
         qpos[-4:-2] = self.target
         qvel = self.init_qvel + self.np_random.uniform(low=-.005, high=.005, size=self.model.nv)
