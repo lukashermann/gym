@@ -48,6 +48,7 @@ class JacoPushEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         # keep camera fixed in scene
         #self.viewer.cam.trackbodyid = 1
         #self.viewer.cam.distance = 2
+        self.viewer.cam.elevation = -10
         self.viewer.cam.lookat[0] = self.model.data.xpos[2,0]
         self.viewer.cam.lookat[1] = self.model.data.xpos[2,1]
         self.viewer.cam.lookat[2] = self.model.data.xpos[2,2]
