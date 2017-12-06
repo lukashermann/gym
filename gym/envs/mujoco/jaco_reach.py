@@ -2,11 +2,11 @@ import numpy as np
 from gym import utils
 from gym.envs.mujoco import mujoco_env
 
-class JacoEnv(mujoco_env.MujocoEnv, utils.EzPickle):
+class JacoReachEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def __init__(self):
         self.col_pen = -0.3
         utils.EzPickle.__init__(self)
-        mujoco_env.MujocoEnv.__init__(self, 'jaco/jaco.xml', 2)
+        mujoco_env.MujocoEnv.__init__(self, 'jaco_reach/jaco_reach.xml', 2)
         self.width = 200
         self.height = 200
 
