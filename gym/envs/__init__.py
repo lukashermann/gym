@@ -204,8 +204,8 @@ register(
 # 2D
 
 register(
-    id='Jaco-v1',
-    entry_point='gym.envs.mujoco:JacoEnv',
+    id='JacoReach-v1',
+    entry_point='gym.envs.mujoco:JacoReachEnv',
     max_episode_steps=150,
     reward_threshold=-5.5,
 )
@@ -305,7 +305,7 @@ register(
 )
 
 for task in ['Reacher', 'InvertedPendulum', 'InvertedDoublePendulum', 'HalfCheetah',
-             'Hopper', 'Swimmer', 'Walker2d', 'Ant', 'Humanoid', 'HumanoidStandup','Jaco', 'JacoPush']:
+             'Hopper', 'Swimmer', 'Walker2d', 'Ant', 'Humanoid', 'HumanoidStandup','JacoReach', 'JacoPush']:
     register(
         id='{}Pixel-v1'.format(task),
         entry_point='gym.envs.mujoco:MujocoPixelEnv',
