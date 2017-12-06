@@ -47,9 +47,9 @@ class JacoReachEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
     def initialize_random_qpos(self):
         qpos = self.np_random.uniform(low=-0.1, high=0.1, size=self.model.nq) + self.init_qpos
-        qpos[0] = np.random.uniform(-np.pi,np.pi)
-        qpos[1] = np.random.uniform(-1,0.5)
-        qpos[2] = np.random.uniform(-np.pi,0)
+        qpos[0] = self.np_random.uniform(-np.pi,np.pi)
+        qpos[1] = self.np_random.uniform(-1,0.5)
+        qpos[2] = self.np_random.uniform(-np.pi,0)
 
         return qpos
 
