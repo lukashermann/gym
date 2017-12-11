@@ -7,8 +7,8 @@ class JacoPushEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         self.col_pen = -1
         utils.EzPickle.__init__(self)
         mujoco_env.MujocoEnv.__init__(self, 'jaco_push/jaco_push.xml', 2)
-        self.width = 500
-        self.height = 500
+        self.width = 200
+        self.height = 200
 
 
     def _step(self, a):
